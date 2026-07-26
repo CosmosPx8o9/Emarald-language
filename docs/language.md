@@ -116,7 +116,7 @@ Immutable variable:
 const PI : Real <- 3.14
 ```
 
-        ---
+---
 
 # 6. Operations
 
