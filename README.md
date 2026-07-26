@@ -1,4 +1,53 @@
-# Emarald-language
-Emarald - scripting language that supports unique portable C programming.
+# Emerald 
 
-executed by a special program called "runner" that runs byte code generated from the source code.
+A modern implementation of the Emerald programming language, originally created in the 1980s by Andrew P. Black, Norman K. Hutchinson, Eric B. Jul, and Henry M. Levy at the University of Washington.
+
+Emerald is an object-oriented programming language featuring a portable virtual machine, distributed object migration, and interoperability with C.
+
+## Features
+
+- Portable Emerald VM
+- Distributed object migration
+- C interoperability
+- Native code generation
+- Strong static typing
+
+## Example
+
+```emerald
+const Main <- object Main
+    initially
+        stdout.putstring["Hello, World!\n"]
+    end initially
+end Main
+```
+
+## Project status
+
+Curret version 0.0.0
+This project is in the early stages of development.
+
+## Repository structure
+
+compiler/
+vm/
+runtime/
+docs/
+examples/
+stdlib/
+common/
+
+## Build
+
+mkdir build
+cd build
+cmake ..
+make
+
+## Original Emerald
+
+Official website of the original Emerald programming language:
+https://www.emeraldprogramminglanguage.org
+
+Article describing the Emerald programming language: 
+https://dl.acm.org/doi/10.1145/1238844.1238855
