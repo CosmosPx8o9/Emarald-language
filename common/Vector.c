@@ -19,7 +19,7 @@ int v_init(vector** target, int botm, int size) {
 	if (!init) return 26;
 
 	init->pointers = malloc(size * sizeof(void*));
-	if (!init->pointers) return 26;
+	if (!init->pointers) { free(init); return 26;}
 
 	init->ceiling = size;
 	init->bottom  = botm;

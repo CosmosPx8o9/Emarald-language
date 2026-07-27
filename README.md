@@ -2,7 +2,9 @@
 
 A modern implementation of the Emerald programming language, originally created in the 1980s by Andrew P. Black, Norman K. Hutchinson, Eric B. Jul, and Henry M. Levy at the University of Washington.
 
-Emerald is an object-oriented programming language featuring a portable virtual machine, distributed object migration, and interoperability with C.
+Emerald is a modern reimplementation of the original Emerald programming language, designed for modern distributed systems and microservice architectures while preserving the core ideas of the original language.
+
+It is an object-oriented programming language featuring a portable virtual machine, distributed object migration, interoperability with C, native code generation,and strong static typing
 
 ## Features
 
@@ -24,7 +26,7 @@ end Main
 
 ## Project status
 
-Curret version 0.0.0
+Current version 0.0.0
 This project is in the early stages of development.
 
 ## Repository structure
