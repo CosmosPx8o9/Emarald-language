@@ -74,11 +74,8 @@ int str_append(string* init, const char* str) {
 	if (!init || !str || !init->chars) return 25;
 	for (size_t i = 0; str[i] != '\0'; ++i, init->top++) {
 		if (init->top >= init->length) {
-			int new_lgth = init->length * 2;
-			char* temp = realloc(init->chars, new_lgth * sizeof(char));
-			if (!temp) return 26;
-			init->chars = temp;
-			init->length= new_lgth;
+			size_t new_size = init->length * 2;
+			if (str_reserve(init, new_size)) return 26;
 		}
 		init->chars[init->top] = str[i];
 	}
@@ -86,10 +83,24 @@ int str_append(string* init, const char* str) {
 	return 0;
 }
 
+int str_add(string* init, char letter) {
+	if (!init||!init->chars) return 25;
+	
+	if (init->top >= init->length) {
+		size_t new_size = init->top * 2;
+		if (str_reserve(init, new_size)) return 26;
+	}
+	
+	init->chars[init->top] = letter;
+	init->top++;
+	init->chars[init->top] = '\0';
+	return 0;
+}
+
 int str_pop(string* init, size_t count) {
 	if (!init||!init->chars||!count) return 25;
 
-	if (init->top < count) {
+	if (init->top <= count) {
 		init->top = 0;
 		init->chars[init->top] = '\0';
 		return 0;
