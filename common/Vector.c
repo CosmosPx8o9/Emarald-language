@@ -8,25 +8,25 @@ bool v_empty(vector* init) {
 }
 
 size_t v_top(vector* init) {
-	if (!init) return 25;
+	if (!init) return 0;
 	return init->top;
 }
 
-int v_init(vector* init, size_t size_element) {
-	if (!init) return 25;
+em_error v_init(vector* init, size_t size_element) {
+	if (!init) return ERR_ARG;
 	init->ceiling = 8;
 	init->size    = size_element;
 	init->top     = 0;
 
 	init->bytes = malloc(8 * size_element);
-	if (!init->bytes) return 26;
-	return 0;
+	if (!init->bytes) return ERR_MEM;
+	return EM_OK;
 }
 
-int v_free(vector* init) {
-	if (!init||!init->bytes) return 25;
+em_error v_free(vector* init) {
+	if (!init||!init->bytes) return ERR_ARG;
 	free(init->bytes);
-	return 0;
+	return EM_OK;
 }
 
 vector* v_from(size_t size_element) {
@@ -35,63 +35,63 @@ vector* v_from(size_t size_element) {
 	return init;
 }
 
-int v_destroy(vector** init) {
-	if (!init||!(*init)) return 26;
+em_error v_destroy(vector** init) {
+	if (!init||!(*init)) return ERR_ARG;
 
 	if ((*init)->bytes) free((*init)->bytes);
 	free((*init));
 	*init = NULL;
-	return 0;
+	return EM_OK;
 }
 
-int v_reserve(vector* init, int s_new) {
-	if (!init||!init->bytes) return 25;
-	if (s_new <= init->ceiling) return 30;
+em_error v_reserve(vector* init, size_t s_new) {
+	if (!init||!init->bytes) return ERR_ARG;
+	if (s_new <= init->ceiling) return ERR_FUN;
 	unsigned char* temp = realloc(init->bytes, s_new * init->size);
-	if (!temp) return 26;
+	if (!temp) return ERR_MEM;
 	init->bytes = temp;
 	init->ceiling  = s_new;
-	return 0;
+	return EM_OK;
 }
 
-int v_push(vector* init, void* ptr) {
-	if (!init||!init->bytes||!ptr) return 25;
+em_error v_push(vector* init, void* ptr) {
+	if (!init||!init->bytes||!ptr) return ERR_ARG;
 
 	if (init->top >= init->ceiling) {
-		int s_new = init->ceiling * 2;
-		if (v_reserve(init, s_new)) return 26;
+		size_t s_new = init->ceiling * 2;
+		if (v_reserve(init, s_new)) return ERR_MEM;
 	}
 	void* offest = init->bytes + init->top * init->size;
 	memcpy(offest, ptr, init->size);
 	init->top++;
-	return 0;
+	return EM_OK;
 }
 
-int v_back(vector* init, void* resulf) {
-	if (!init || !resulf) return 25;
-	if (v_empty(init)) return 30;
+em_error v_back(vector* init, void* resulf) {
+	if (!init || !resulf) return ERR_ARG;
+	if (v_empty(init)) return ERR_FUN;
 
 	void* offest = init->bytes + (init->top - 1) * init->size;
 	memcpy(resulf, offest, init->size);
-	return 0;
+	return EM_OK;
 }
 
-int v_pop(vector* init, void* resulf) {
-	if (!init || !resulf) return 25;
-	if (v_empty(init)) return 30;
+em_error v_pop(vector* init, void* resulf) {
+	if (!init || !resulf) return ERR_ARG;
+	if (v_empty(init)) return ERR_FUN;
 
 	init->top--;
 	void* offest = init->bytes + init->top * init->size;
 	memcpy(resulf, offest, init->size);
-	return 0;
+	return EM_OK;
 }
 
-int v_get(vector* init, int index, void* resulf) {
-	if (!init || !resulf) return 25;
+em_error v_get(vector* init, size_t index, void* resulf) {
+	if (!init || !resulf) return ERR_ARG;
 	if (index >= 0 && index < init->top) {
 		void* offest = init->bytes + init->top *init->size;
 		memcpy(resulf, offest, init->size);
-		return 0;
+		return EM_OK;
 	}
-	return 25;
+	return ERR_ARG;
 }

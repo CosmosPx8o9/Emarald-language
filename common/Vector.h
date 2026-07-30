@@ -2,6 +2,7 @@
 #define VECTOR_H
 #include <stdbool.h>
 #include <stddef.h>
+#include "Error.h"
 
 typedef struct {
 	unsigned char* bytes;
@@ -10,18 +11,18 @@ typedef struct {
 	size_t top;
 } vector;
 
-int v_init(vector*, size_t);
-int v_free(vector*);
+em_error v_init(vector*, size_t);
+em_error v_free(vector*);
 
 vector* v_from(size_t);
-int v_destroy(vector**);
+em_error v_destroy(vector**);
 
-int v_reserve(vector*, int);
+em_error v_reserve(vector*, size_t);
 
-int v_push(vector*, void*);
-int v_pop(vector*, void*);
-int v_back(vector*, void*);
-int v_get(vector*, int, void*);
+em_error v_push(vector*, void*);
+em_error v_pop(vector*, void*);
+em_error v_back(vector*, void*);
+em_error v_get(vector*, size_t, void*);
 
 size_t v_top(vector*);
 bool v_empty(vector*);
