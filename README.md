@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="logo.png" width="180" alt="Emerald Logo">
+</p>
+
 # Emerald 
 
 A modern implementation of the Emerald programming language, originally created in the 1980s by Andrew P. Black, Norman K. Hutchinson, Eric B. Jul, and Henry M. Levy at the University of Washington.
