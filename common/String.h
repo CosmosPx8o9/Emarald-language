@@ -1,32 +1,26 @@
 #ifndef STRING_H
 #define STRING_H
+
 #include <stddef.h>
 #include <stdbool.h>
+#include "Vector.h"
 
 typedef struct {
-	char* chars;
-	size_t start;
-	size_t length;
-	size_t top;
+	vector* vec;
 } string;
 
-size_t str_top(string*);
-size_t str_len(string*);
-bool str_empty(string*);
+size_t str_len(string);
+bool str_empty(string);
 
-const char* str_cstr(string*);
-int str_clear(string*);
-int str_reserve(string*, size_t);
 
-int str_init(string*, const char*);
-int str_free(string*);
+const char* str_cstr(string);
+em_error str_clear(string);
+em_error str_reserve(string, size_t);
 
-int str_append(string*, const char*);
-int str_add(string*, char);
+em_error str_init(string, const char*);
+em_error str_free(string);
 
-int str_pop(string*, size_t);
-
-string* str_from(const char*);
-int str_destroy(string**);
+em_error str_append(string, const char*);
+em_error str_add(string, char);
 
 #endif

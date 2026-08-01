@@ -1,130 +1,69 @@
 #include "String.h"
-#include <stdio.h>
 #include <stdlib.h>
 
-size_t get_len(const char* str) {
-	if (!str) return 0;
+#define NOT_INIT !init.vec||!init.vec->bytes
+
+size_t length_get(const char* text) {
 	size_t index = 0;
-	for (; str[index] != '\0'; ++index) {}
+	for (; text[index] != '\0'; index++) {}
 	return index;
 }
 
-size_t str_top(string* init) {
-	if (!init) return 0;
-	return init->top;
+bool str_empty(string init) {
+	return v_empty(init.vec);
 }
 
-size_t str_len(string* init) {
-	if (!init) return 0;
-	return init->length;
+size_t str_len(string init) {
+	return v_top(init.vec);
 }
 
-bool str_empty(string* init) {
-	if (!init) return false;
-	return init->top == 0;
+const char* str_cstr(string init) {
+	if (NOT_INIT) return NULL;
+	return (const char*)init.vec->bytes;
 }
 
-const char* str_cstr(string* init) {
-	if (!init||!init->chars) return NULL;
-	return init->chars;
+em_error str_clear(string init) {
+	if (NOT_INIT) return ERR_ARG;
+	init.vec->top = 0;
+	init.vec->bytes[init.vec->top] = '\0';
+	return EM_OK;
 }
 
-int str_clear(string* init) {
-	if (!init||!init->chars) return 25;
-	init->top = 0;
-	init->chars[init->top] = '\0';
-	return 0;
+em_error str_reserve(string init, size_t new_size) {
+	return v_reserve(init.vec, new_size);
 }
 
-int str_reserve(string* init, size_t new_size) {
-	if (!init||!init->chars) return 25;
-	if (new_size <= init->length) return 30;
-
-	char* temp = realloc(init->chars, new_size * sizeof(char));
-	if (!temp) return 26;
-
-	init->chars = temp;
-	init->length = new_size;
-	return 0;
+em_error str_add(string init, char letter) {
+	if (NOT_INIT) return ERR_ARG;
+	em_error code;
+	if ((code = v_push(init.vec, &letter))) return code;
+	init.vec->bytes[init.vec->top] = '\0';
+	return EM_OK;
 }
 
-int str_init(string* init, const char* str) {
-	if (!init || !str) return 25;
-
-	init->start = 0;
-	init->top = get_len(str);
-	init->length= init->top * 2;
-	init->chars = malloc(init->length * sizeof(char));
-	if (!init->chars) return 26;
-
-	for (size_t i = 0; i < init->top; ++i) {
-		init->chars[i] = str[i];
+em_error str_append(string init, const char* text) {
+	if (NOT_INIT||!text) return ERR_ARG;
+	size_t len = length_get(text);
+	for (int i = 0; i < len; ++i) {
+		em_error code;
+		if ((code = v_push(init.vec, (void*)&text[i]))) return code;
 	}
-	init->chars[init->top] = '\0';
-	return 0;
+	init.vec->bytes[init.vec->top] = '\0';
+	return EM_OK;
 }
 
-int str_free(string* init) {
-	if (!init || !init->chars) return 25;
-	free(init->chars);
-	return 0;
+em_error str_init(string init, const char* text) {
+	em_error code;
+	size_t len = length_get(text);
+	if ((code = v_init(init.vec, sizeof(char)))) return code;
+	if ((code = v_reserve(init.vec, init.vec->ceiling * 2))) return code;
+
+	return str_append(init, text);
 }
 
-int str_append(string* init, const char* str) {
-	if (!init || !str || !init->chars) return 25;
-	for (size_t i = 0; str[i] != '\0'; ++i, init->top++) {
-		if (init->top >= init->length) {
-			size_t new_size = init->length * 2;
-			if (str_reserve(init, new_size)) return 26;
-		}
-		init->chars[init->top] = str[i];
-	}
-	init->chars[init->top] = '\0';
-	return 0;
-}
-
-int str_add(string* init, char letter) {
-	if (!init||!init->chars) return 25;
-	
-	if (init->top >= init->length) {
-		size_t new_size = init->top * 2;
-		if (str_reserve(init, new_size)) return 26;
-	}
-	
-	init->chars[init->top] = letter;
-	init->top++;
-	init->chars[init->top] = '\0';
-	return 0;
-}
-
-int str_pop(string* init, size_t count) {
-	if (!init||!init->chars||!count) return 25;
-
-	if (init->top <= count) {
-		init->top = 0;
-		init->chars[init->top] = '\0';
-		return 0;
-	}
-	init->top = init->top - count;
-	init->chars[init->top] = '\0';
-	return 0;
-}
-
-string* str_from(const char* str) {
-	if (!str) return NULL;
-
-	string* init = malloc(sizeof(string));
-	if (!init) return NULL;
-
-	if (str_init(init, str)) return NULL;
-	return init;
-}
-
-int str_destroy(string** init) {
-	if (!init||!(*init)||!(*init)->chars) return 25;
-
-	free((*init)->chars);
-	free((*init));
-	*init = NULL;
-	return 0;
+em_error str_free(string init) {
+	em_error code;
+	code = v_free(init.vec);
+	init.vec = NULL;
+	return code;
 }
