@@ -14,11 +14,12 @@ Emerald is an object-oriented programming language with a portable virtual machi
 
 Emerald source files use the `.em` extension.
 
-Example:
+Example
 
 ```emerald
-const Main <- object Main
-end Main
+Main.em
+hello.em
+qwerty.em
 ```
 
 ## 1.2 Comments
@@ -60,7 +61,9 @@ printHello
 # 2. Keywords
 
 ```
+new
 object
+module
 const
 var
 operation
@@ -71,6 +74,7 @@ if
 elseif
 else
 loop
+while
 return
 end
 ```
@@ -90,19 +94,36 @@ end
 
 # 4. Objects
 
-Objects are the primary programming construct in Emerald.
+Everything is built around objects. Objects encapsulate state and behavior, and program execution occurs through interactions between objects.
+Objects are the fundamental units of computation in Emerald.
 
 Example:
 
 ```emerald
-const Main <- object Main
-
-end Main
+const Main: object = new object Main {
+   --- something beautiful
+}
 ```
 
 ---
 
-# 5. Variables
+# 5. Modules
+
+Modules are used to organize Emerald programs into independent units and provide a namespace for objects, types, and operations.
+
+A module can contain multiple objects and expose only the parts of its implementation that are intended to be used by other modules.
+
+Modules allow large programs to be divided into smaller, reusable components while keeping their internal implementation separated from the rest of the program.
+
+Exemple:
+
+```emerald
+const io: module = import std.stdio
+```
+
+---
+
+# 6. Variables
 
 Mutable variable:
 
@@ -113,61 +134,61 @@ var count : Integer
 Immutable variable:
 
 ```emerald
-const PI : Real <- 3.14
+const PI : Real = 3.14
 ```
 
 ---
 
-# 6. Operations
+# 7. Operations
 
 ```emerald
-operation add[a : Integer, b : Integer] -> Integer
+operation add(a : Integer, b : Integer) -> Integer {
     return a + b
-end add
+}
 ```
 
 ---
 
-# 7. Object Initialization
+# 8. Object Initialization
 
 ```emerald
-initially
-    stdout.putstring["Hello"]
-end initially
+initially {
+    --- Initialization code
+}
 ```
 
 ---
 
-# 8. Processes
+# 9. Processes
 
 In development
 
 ---
 
-# 9. Distributed Objects
+# 10. Distributed Objects
 
 In development
 
 ---
 
-# 10. C Interoperability
+# 11. C Interoperability
 
 In development
 
 ---
 
-# 11. Standard Library
+# 12. Standard Library
 
 In development
 
 ---
 
-# 12. Virtual Machine
+# 13. Virtual Machine
 
 In development
 
 ---
 
-# 13. Bytecode
+# 14. Bytecode
 
 In development
