@@ -22,11 +22,13 @@ It is an object-oriented programming language featuring a portable virtual machi
 ## Example
 
 ```emerald
-const Main <- object Main
-    initially
-        stdout.putstring["Hello, World!\n"]
-    end initially
-end Main
+const out: module = import std.stdio
+
+const Main: object = new object Main {
+    initially {
+        out::stdout.putstring("Hello, World!\n")
+    }
+}
 ```
 
 ## Project status
