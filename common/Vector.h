@@ -1,5 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
+
 #include <stdbool.h>
 #include <stddef.h>
 #include "Error.h"
@@ -21,6 +22,7 @@ em_error v_reserve(vector*, size_t);
 
 em_error v_push(vector*, void*);
 em_error v_pop(vector*, void*);
+em_error v_set(vector*, void*, size_t) 
 em_error v_back(vector*, void*);
 em_error v_get(vector*, size_t, void*);
 

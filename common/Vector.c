@@ -76,6 +76,14 @@ em_error v_back(vector* init, void* resulf) {
 	return EM_OK;
 }
 
+em_error v_set(vector* init, void* ptr, size_t index) {
+	if (!init || !resulf) return ERR_ARG;
+	if (index >= init->top) return ERR_FUN;
+	void* offest = init->bytes + init->top * init->size;
+	memcpy(offest, ptr, init->size);
+	return EM_OK;
+}
+
 em_error v_pop(vector* init, void* resulf) {
 	if (!init || !resulf) return ERR_ARG;
 	if (v_empty(init)) return ERR_FUN;
