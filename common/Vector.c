@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// Copyright (C) 2026 cosmosPx8o9
+// Created:  26.07.2026
+// Last edited:  11.08.2026
+
 #include "Vector.h"
 #include <stdlib.h>
 #include <string.h>

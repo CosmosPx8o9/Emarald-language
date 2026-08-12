@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// Copyright (C) 2026 cosmosPx8o9
+// Created:  27.07.2026
+// Last edited:  01.08.2026
+
 #include "String.h"
 #include <stdlib.h>
 
