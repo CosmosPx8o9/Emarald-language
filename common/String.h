@@ -1,8 +1,4 @@
 
-// SPDX-License-Identifier: MIT
-// Copyright (C) 2026 cosmosPx8o9
-// Created:  27.07.2026
-// Last editet: 01.08.2026
 
 #ifndef STRING_H
 #define STRING_H
